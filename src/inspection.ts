@@ -169,15 +169,6 @@ function checkSubject(subject: string, inputs: input.Inputs): string[] {
         'a verb in imperative mood.'
     );
   } else {
-    const capitalized = capitalize(firstWord);
-    if (firstWord !== capitalized) {
-      errors.push(
-        'The subject must start with a capitalized word, ' +
-          `but the current first word is: ${JSON.stringify(firstWord)}. ` +
-          `Please capitalize to: ${JSON.stringify(capitalized)}.`
-      );
-    }
-
     if (
       !mostFrequentEnglishVerbs.SET.has(firstWord.toLowerCase()) &&
       !inputs.additionalVerbs.has(firstWord.toLowerCase())

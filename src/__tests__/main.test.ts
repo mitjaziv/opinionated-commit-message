@@ -131,7 +131,7 @@ it('formats properly errors on a single message.', () => {
   jest
     .spyOn(commitMessages, 'retrieve')
     .mockImplementation(() => [
-      'change SomeClass to OtherClass\n\nSomeClass with OtherClass'
+      'changed SomeClass to OtherClass\n\nSomeClass with OtherClass'
     ]);
 
   jest.spyOn(core, 'setFailed');
@@ -142,12 +142,9 @@ it('formats properly errors on a single message.', () => {
 
   expect(core.setFailed).toBeCalledWith(
     'The message 1 is invalid:\n' +
-      '* The subject must start with a capitalized word, but ' +
-      'the current first word is: "change". ' +
-      'Please capitalize to: "Change".\n' +
+      '* The subject must start with a verb in imperative mood, but it started with: \"changed\". Whether the word is in imperative mood is determined by whitelisting. The general whitelist is available at https://github.com/mristin/opinionated-commit-message/blob/master/src/mostFrequentEnglishVerbs.ts. You can whitelist additional verbs using \"additional-verbs\" input to your GitHub action (currently no additional verbs were thus specified). Moreover, you can also whitelist additional verbs in a file given as \"path-to-additional-verbs\" input to your GitHub action (currently no whitelist file was specified). Please check the whitelist and either change the first word of the subject or whitelist the verb.\n' +
       'The original message was:\n' +
-      'change SomeClass to OtherClass\n' +
-      '\n' +
+      'changed SomeClass to OtherClass\n\n' +
       'SomeClass with OtherClass\n'
   );
 });
@@ -156,7 +153,7 @@ it('formats properly errors on two messages.', () => {
   jest
     .spyOn(commitMessages, 'retrieve')
     .mockImplementation(() => [
-      `change SomeClass to OtherClass\n\nDo something`,
+      `changed SomeClass to OtherClass\n\nDo something`,
       'Change other subject\n\nChange body'
     ]);
 
@@ -167,12 +164,10 @@ it('formats properly errors on two messages.', () => {
   expect(core.setFailed).toBeCalledTimes(1);
   expect(core.setFailed).toHaveBeenCalledWith(
     'The message 1 is invalid:\n' +
-      '* The subject must start with a capitalized word, ' +
-      'but the current first word is: "change". ' +
-      'Please capitalize to: "Change".\n' +
+      '* The subject must start with a verb in imperative mood, but it started with: \"changed\". Whether the word is in imperative mood is determined by whitelisting. The general whitelist is available at https://github.com/mristin/opinionated-commit-message/blob/master/src/mostFrequentEnglishVerbs.ts. You can whitelist additional verbs using \"additional-verbs\" input to your GitHub action (currently no additional verbs were thus specified). Moreover, you can also whitelist additional verbs in a file given as \"path-to-additional-verbs\" input to your GitHub action (currently no whitelist file was specified). Please check the whitelist and either change the first word of the subject or whitelist the verb.\n' +
       'The original message was:\n' +
-      'change SomeClass to OtherClass\n\nDo something\n\n' +
-      'The message 2 is invalid:\n' +
+      `changed SomeClass to OtherClass\n\nDo something\n\n` +
+    'The message 2 is invalid:\n' +
       '* The first word of the subject ("Change") must not match ' +
       'the first word of the body. Please make the body more informative ' +
       'by adding more information instead of repeating the subject. ' +

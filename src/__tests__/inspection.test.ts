@@ -120,21 +120,6 @@ it('reports the subject starting with a non-word.', () => {
   ]);
 });
 
-it('reports the subject starting with a non-capitalized word.', () => {
-  const message =
-    'change SomeClass to OtherClass\n' +
-    '\n' +
-    'This replaces the SomeClass with OtherClass in all of the module \n' +
-    'since Some class was deprecated.';
-
-  const errors = inspection.check(message, defaultInputs);
-  expect(errors).toEqual([
-    'The subject must start with a capitalized word, ' +
-      'but the current first word is: "change". ' +
-      'Please capitalize to: "Change".'
-  ]);
-});
-
 it(
   'reports the subject starting with a non-verb ' +
     'with no additional verbs given.',
